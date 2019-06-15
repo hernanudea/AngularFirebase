@@ -1,6 +1,7 @@
-<h1>Héroe <small>nombre del héroes</small></h1>
+<h1>Héroe <small>{{heroe.nombre}}</small></h1>
 <div class="row text-right">
   <div class="col">
+    <hr />
     <button class="btn btn-danger" routerLink="['/heroes']">
       <i class="fa fa-arrow-left"></i>
       Regresar
@@ -10,11 +11,12 @@
 
 <div class="row animated fadeIn faster">
   <div class="col">
-
-    <form (ngSubmit)="">
+    <form (ngSubmit)="guardar(form)" #form="ngForm">
       <div class="form-group">
         <label>Firebase Id</label>
         <input
+          [(ngModel)]="heroe.id"
+          name="id"
           type="text"
           class="form-control"
           disabled="disabled"
@@ -26,6 +28,8 @@
       <div class="form-group">
         <label>Nombre</label>
         <input
+          [(ngModel)]="heroe.nombre"
+          name="nombre"
           type="text"
           class="form-control"
           required
@@ -35,22 +39,38 @@
 
       <div class="form-group">
         <label>Poder</label>
-        <input type="text" class="form-control" placeholder="Poder" />
+        <input
+          [(ngModel)]="heroe.poder"
+          name="poder"
+          type="text"
+          class="form-control"
+          placeholder="Poder"
+        />
       </div>
 
       <div class="form-group">
         <label>Estado</label>
         <br />
-        <button class="btn btn-outline-success w-50" type="button">
+        <button
+          *ngIf="heroe.vivo"
+          (click)="heroe.vivo = false"
+          class="btn btn-outline-success w-50"f
+          type="button"
+        >
           <i class="fa fa-smile-wink"> Vivo</i>
         </button>
-        <button class="btn btn-outline-danger w-50" type="button">
+        <button
+          *ngIf="!heroe.vivo"
+          (click)="heroe.vivo = true"
+          class="btn btn-outline-danger w-50"
+          type="button"
+        >
           <i class="fa fa-dizzy"> Muerto</i>
         </button>
       </div>
       <hr />
       <div class="form-group text-center">
-        <button type="submit" class="btn btn-primary w-25">
+        <button [disabled]="form.invalid" type="submit" class="btn btn-primary w-25 disabled">
           <i class="fa fa-save"></i> Guardar
         </button>
       </div>
